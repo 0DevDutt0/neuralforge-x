@@ -1,0 +1,19 @@
+[package]
+name = "neuralforge_profile"
+description = "Sustained-workload profiling targets for the NeuralForge-X kernels."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+publish = false
+
+[[bin]]
+name = "neuralforge_profile"
+path = "src/main.rs"
+
+[dependencies]
+# Profile the real shipped kernels — no re-implementation — so a flamegraph or
+# Nsight trace points at exactly the code that runs in production.
+neuralforge_core = { path = "../rust_core" }
