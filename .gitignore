@@ -1,0 +1,75 @@
+# ---- Rust -----------------------------------------------------------------
+/target/
+**/target/
+*.pdb
+# Cargo.lock IS committed: the workspace's end product is a distributable
+# extension module, so a pinned lockfile gives reproducible CI builds & wheels.
+
+# ---- Python ---------------------------------------------------------------
+venv/
+.venv/
+env/
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.pyd
+.Python
+build/
+dist/
+wheels/
+*.egg-info/
+.eggs/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.hypothesis/
+*.whl
+# Editable-dev shim written by scripts/dev_build.ps1
+**/site-packages/neuralforge_dev.pth
+
+# ---- CUDA / native build artifacts ---------------------------------------
+*.o
+*.obj
+*.ptx
+*.cubin
+*.fatbin
+*.lib
+*.exp
+*.dll
+*.exe
+
+# ---- Benchmark / profiling outputs ---------------------------------------
+# Machine-specific runs are reproduced locally; only the generated SVG charts
+# under docs/assets/ are committed.
+/benchmark_lab/results/*.json
+/benchmark_lab/results/*.md
+/profiling/out/
+*.flamegraph
+*.svg.tmp
+perf.data*
+*.nsys-rep
+*.ncu-rep
+
+# ---- Docs site ------------------------------------------------------------
+/site/
+.cache/
+
+# ---- Secrets / environment ------------------------------------------------
+.env
+.env.*
+!.env.example
+
+# ---- OS / editor ----------------------------------------------------------
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*~
+
+# ---- Local-only · never publish ------------------------------------------
+# Private build spec / prompt and the personal upload helper — kept out of the
+# public repository.
+/Prompt.txt
+/GITHUB_UPLOAD.md

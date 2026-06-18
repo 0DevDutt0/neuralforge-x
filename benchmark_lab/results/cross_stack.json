@@ -1,0 +1,674 @@
+{
+  "schema": "neuralforge-x/benchmark/1",
+  "environment": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "processor": "Intel64 Family 6 Model 198 Stepping 2, GenuineIntel",
+    "python": "3.13.12",
+    "cpu_count_logical": 24,
+    "cpu_count_physical": 24,
+    "ram_total_mb": 33753,
+    "numpy": "2.4.6",
+    "neuralforge": "0.1.0",
+    "gpu": {
+      "name": "NVIDIA GeForce RTX 5090 Laptop GPU",
+      "compute_capability": "120",
+      "total_mem_mb": 24462,
+      "free_mem_mb": 20807,
+      "cupy_version": "14.1.1",
+      "runtime_version": 12090,
+      "driver_version": 13010
+    },
+    "gpu_backends": [
+      "cuda",
+      "triton",
+      "torch"
+    ]
+  },
+  "config": {
+    "pairwise_dims": [
+      128,
+      384,
+      768,
+      1536
+    ],
+    "batch_corpus": [
+      50000,
+      200000
+    ],
+    "topk_corpus": [
+      50000,
+      200000
+    ],
+    "dim": 768,
+    "queries": 64,
+    "top_k": 10,
+    "repeats": 7,
+    "use_gpu": true
+  },
+  "workloads": [
+    {
+      "workload": "pairwise_cosine",
+      "unit": "elements",
+      "baseline": "python",
+      "lower_is_better": true,
+      "sizes": [
+        {
+          "params": {
+            "dim": 128
+          },
+          "measurements": [
+            {
+              "backend": "python",
+              "repeats": 7,
+              "best_ms": 0.006,
+              "median_ms": 0.0062,
+              "mean_ms": 0.0064,
+              "p90_ms": 0.0068,
+              "stdev_ms": 0.0003,
+              "work_items": 128,
+              "throughput_per_s": 21333377.9,
+              "peak_host_kib": 0.4141,
+              "rss_delta_kib": 4.0,
+              "cpu_percent": 0.0
+            },
+            {
+              "backend": "numpy",
+              "repeats": 7,
+              "best_ms": 0.003,
+              "median_ms": 0.003,
+              "mean_ms": 0.0032,
+              "p90_ms": 0.0036,
+              "stdev_ms": 0.0003,
+              "work_items": 128,
+              "throughput_per_s": 42667169.6,
+              "peak_host_kib": 2.8203,
+              "rss_delta_kib": 0.0,
+              "cpu_percent": 0.0
+            },
+            {
+              "backend": "rust",
+              "repeats": 7,
+              "best_ms": 0.0007,
+              "median_ms": 0.0008,
+              "mean_ms": 0.0008,
+              "p90_ms": 0.0008,
+              "stdev_ms": 0.0001,
+              "work_items": 128,
+              "throughput_per_s": 182855750.5,
+              "peak_host_kib": 0.1719,
+              "rss_delta_kib": 0.0,
+              "cpu_percent": 0.0
+            }
+          ]
+        },
+        {
+          "params": {
+            "dim": 384
+          },
+          "measurements": [
+            {
+              "backend": "python",
+              "repeats": 7,
+              "best_ms": 0.0185,
+              "median_ms": 0.0186,
+              "mean_ms": 0.0187,
+              "p90_ms": 0.0188,
+              "stdev_ms": 0.0001,
+              "work_items": 384,
+              "throughput_per_s": 20756729.3,
+              "peak_host_kib": 0.4141,
+              "rss_delta_kib": 0.0,
+              "cpu_percent": 0.0
+            },
+            {
+              "backend": "numpy",
+              "repeats": 7,
+              "best_ms": 0.0034,
+              "median_ms": 0.0035,
+              "mean_ms": 0.0036,
+              "p90_ms": 0.0038,
+              "stdev_ms": 0.0002,
+              "work_items": 384,
+              "throughput_per_s": 112940316.5,
+              "peak_host_kib": 6.8203,
+              "rss_delta_kib": 0.0,
+              "cpu_percent": 0.0
+            },
+            {
+              "backend": "rust",
+              "repeats": 7,
+              "best_ms": 0.0007,
+              "median_ms": 0.0008,
+              "mean_ms": 0.0008,
+              "p90_ms": 0.0009,
+              "stdev_ms": 0.0001,
+              "work_items": 384,
+              "throughput_per_s": 548567251.5,
+              "peak_host_kib": 0.1719,
+              "rss_delta_kib": 0.0,
+              "cpu_percent": 0.0
+            }
+          ]
+        },
+        {
+          "params": {
+            "dim": 768
+          },
+          "measurements": [
+            {
+              "backend": "python",
+              "repeats": 7,
+              "best_ms": 0.0348,
+              "median_ms": 0.0353,
+              "mean_ms": 0.0353,
+              "p90_ms": 0.0356,
+              "stdev_ms": 0.0003,
+              "work_items": 768,
+              "throughput_per_s": 22068982.0,
+              "peak_host_kib": 0.4141,
+              "rss_delta_kib": 0.0,
+              "cpu_percent": 0.0
+            },
+            {
+              "backend": "numpy",
+              "repeats": 7,
+              "best_ms": 0.0034,
+              "median_ms": 0.0035,
+              "mean_ms": 0.0036,
+              "p90_ms": 0.0038,
+              "stdev_ms": 0.0002,
+              "work_items": 768,
+              "throughput_per_s": 225884500.1,
+              "peak_host_kib": 12.8203,
+              "rss_delta_kib": 0.0,
+              "cpu_percent": 0.0
+            },
+            {
+              "backend": "rust",
+              "repeats": 7,
+              "best_ms": 0.0007,
+              "median_ms": 0.0008,
+              "mean_ms": 0.0008,
+              "p90_ms": 0.0009,
+              "stdev_ms": 0.0001,
+              "work_items": 768,
+              "throughput_per_s": 1097225740.8,
+              "peak_host_kib": 0.1719,
+              "rss_delta_kib": 0.0,
+              "cpu_percent": 0.0
+            }
+          ]
+        },
+        {
+          "params": {
+            "dim": 1536
+          },
+          "measurements": [
+            {
+              "backend": "python",
+              "repeats": 7,
+              "best_ms": 0.0697,
+              "median_ms": 0.0707,
+              "mean_ms": 0.074,
+              "p90_ms": 0.081,
+              "stdev_ms": 0.0087,
+              "work_items": 1536,
+              "throughput_per_s": 22037300.6,
+              "peak_host_kib": 0.4141,
+              "rss_delta_kib": 0.0,
+              "cpu_percent": 0.0
+            },
+            {
+              "backend": "numpy",
+              "repeats": 7,
+              "best_ms": 0.004,
+              "median_ms": 0.0042,
+              "mean_ms": 0.0042,
+              "p90_ms": 0.0044,
+              "stdev_ms": 0.0002,
+              "work_items": 1536,
+              "throughput_per_s": 384002664.0,
+              "peak_host_kib": 24.8203,
+              "rss_delta_kib": 0.0,
+              "cpu_percent": 0.0
+            },
+            {
+              "backend": "rust",
+              "repeats": 7,
+              "best_ms": 0.0009,
+              "median_ms": 0.001,
+              "mean_ms": 0.0011,
+              "p90_ms": 0.0013,
+              "stdev_ms": 0.0002,
+              "work_items": 1536,
+              "throughput_per_s": 1706653671.4,
+              "peak_host_kib": 0.1719,
+              "rss_delta_kib": 0.0,
+              "cpu_percent": 0.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "workload": "batch_cosine",
+      "unit": "similarities",
+      "baseline": "numpy",
+      "lower_is_better": true,
+      "sizes": [
+        {
+          "params": {
+            "corpus": 50000,
+            "queries": 64,
+            "dim": 768
+          },
+          "measurements": [
+            {
+              "backend": "numpy",
+              "repeats": 7,
+              "best_ms": 102.186,
+              "median_ms": 108.3067,
+              "mean_ms": 111.164,
+              "p90_ms": 120.9004,
+              "stdev_ms": 7.9312,
+              "work_items": 3200000,
+              "throughput_per_s": 31315444.4,
+              "peak_host_kib": 175192.5938,
+              "rss_delta_kib": 4.0,
+              "cpu_percent": 369.4
+            },
+            {
+              "backend": "rust",
+              "repeats": 7,
+              "best_ms": 33.5519,
+              "median_ms": 36.0912,
+              "mean_ms": 37.4466,
+              "p90_ms": 41.1643,
+              "stdev_ms": 4.3809,
+              "work_items": 3200000,
+              "throughput_per_s": 95374628.5,
+              "peak_host_kib": 0.2578,
+              "rss_delta_kib": 76.0,
+              "cpu_percent": 2050.3
+            },
+            {
+              "backend": "cuda",
+              "repeats": 7,
+              "best_ms": 19.7895,
+              "median_ms": 19.9651,
+              "mean_ms": 20.251,
+              "p90_ms": 20.9683,
+              "stdev_ms": 0.5843,
+              "work_items": 3200000,
+              "throughput_per_s": 161701912.3,
+              "peak_host_kib": 12505.5684,
+              "rss_delta_kib": 0.0,
+              "cpu_percent": 98.5,
+              "gpu": {
+                "util_mean_pct": 48.68,
+                "util_peak_pct": 50.0,
+                "mem_peak_mb": 779.19,
+                "samples": 74
+              }
+            },
+            {
+              "backend": "triton",
+              "repeats": 7,
+              "best_ms": 23.4296,
+              "median_ms": 23.8294,
+              "mean_ms": 23.9759,
+              "p90_ms": 24.6631,
+              "stdev_ms": 0.5017,
+              "work_items": 3200000,
+              "throughput_per_s": 136579369.7,
+              "peak_host_kib": 5.1016,
+              "rss_delta_kib": 0.0,
+              "cpu_percent": 102.2,
+              "gpu": {
+                "util_mean_pct": 44.0,
+                "util_peak_pct": 44.0,
+                "mem_peak_mb": 1003.59,
+                "samples": 74
+              }
+            },
+            {
+              "backend": "torch",
+              "repeats": 7,
+              "best_ms": 13.4013,
+              "median_ms": 13.7347,
+              "mean_ms": 13.8362,
+              "p90_ms": 14.3437,
+              "stdev_ms": 0.5667,
+              "work_items": 3200000,
+              "throughput_per_s": 238782804.5,
+              "peak_host_kib": 1.2344,
+              "rss_delta_kib": 0.0,
+              "cpu_percent": 81.1,
+              "gpu": {
+                "util_mean_pct": 40.13,
+                "util_peak_pct": 65.0,
+                "mem_peak_mb": 1188.14,
+                "samples": 76
+              }
+            }
+          ]
+        },
+        {
+          "params": {
+            "corpus": 200000,
+            "queries": 64,
+            "dim": 768
+          },
+          "measurements": [
+            {
+              "backend": "numpy",
+              "repeats": 7,
+              "best_ms": 388.3486,
+              "median_ms": 394.578,
+              "mean_ms": 393.4463,
+              "p90_ms": 398.0765,
+              "stdev_ms": 4.0887,
+              "work_items": 12800000,
+              "throughput_per_s": 32960077.6,
+              "peak_host_kib": 700192.5938,
+              "rss_delta_kib": 0.0,
+              "cpu_percent": 282.7
+            },
+            {
+              "backend": "rust",
+              "repeats": 7,
+              "best_ms": 205.4565,
+              "median_ms": 241.4942,
+              "mean_ms": 243.4426,
+              "p90_ms": 273.0514,
+              "stdev_ms": 29.1124,
+              "work_items": 12800000,
+              "throughput_per_s": 62300292.3,
+              "peak_host_kib": 0.2578,
+              "rss_delta_kib": 52.0,
+              "cpu_percent": 2063.3
+            },
+            {
+              "backend": "cuda",
+              "repeats": 7,
+              "best_ms": 79.1083,
+              "median_ms": 81.542,
+              "mean_ms": 100.4249,
+              "p90_ms": 136.7832,
+              "stdev_ms": 51.5547,
+              "work_items": 12800000,
+              "throughput_per_s": 161803502.3,
+              "peak_host_kib": 50005.6074,
+              "rss_delta_kib": 0.0,
+              "cpu_percent": 96.4,
+              "gpu": {
+                "util_mean_pct": 42.86,
+                "util_peak_pct": 44.0,
+                "mem_peak_mb": 1802.6,
+                "samples": 74
+              }
+            },
+            {
+              "backend": "triton",
+              "repeats": 7,
+              "best_ms": 104.3066,
+              "median_ms": 105.4063,
+              "mean_ms": 107.2172,
+              "p90_ms": 111.9607,
+              "stdev_ms": 4.6757,
+              "work_items": 12800000,
+              "throughput_per_s": 122715149.4,
+              "peak_host_kib": 4.9531,
+              "rss_delta_kib": 0.0,
+              "cpu_percent": 97.6,
+              "gpu": {
+                "util_mean_pct": 64.12,
+                "util_peak_pct": 65.0,
+                "mem_peak_mb": 2417.07,
+                "samples": 86
+              }
+            },
+            {
+              "backend": "torch",
+              "repeats": 7,
+              "best_ms": 52.0255,
+              "median_ms": 53.2235,
+              "mean_ms": 53.0651,
+              "p90_ms": 53.7239,
+              "stdev_ms": 0.6267,
+              "work_items": 12800000,
+              "throughput_per_s": 246033195.3,
+              "peak_host_kib": 1.1172,
+              "rss_delta_kib": 0.0,
+              "cpu_percent": 99.0,
+              "gpu": {
+                "util_mean_pct": 31.96,
+                "util_peak_pct": 37.0,
+                "mem_peak_mb": 3031.54,
+                "samples": 81
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "workload": "topk_search",
+      "unit": "vectors_scanned",
+      "baseline": "numpy",
+      "lower_is_better": true,
+      "sizes": [
+        {
+          "params": {
+            "corpus": 50000,
+            "dim": 768,
+            "k": 10
+          },
+          "measurements": [
+            {
+              "backend": "numpy",
+              "repeats": 7,
+              "best_ms": 9.6563,
+              "median_ms": 10.0097,
+              "mean_ms": 10.102,
+              "p90_ms": 10.4416,
+              "stdev_ms": 0.3129,
+              "work_items": 50000,
+              "throughput_per_s": 5177966.7,
+              "peak_host_kib": 983.0391,
+              "rss_delta_kib": 0.0,
+              "cpu_percent": 388.9
+            },
+            {
+              "backend": "rust",
+              "repeats": 7,
+              "best_ms": 1.589,
+              "median_ms": 1.7545,
+              "mean_ms": 1.8342,
+              "p90_ms": 2.118,
+              "stdev_ms": 0.2307,
+              "work_items": 50000,
+              "throughput_per_s": 31466331.2,
+              "peak_host_kib": 1.0156,
+              "rss_delta_kib": 4.0,
+              "cpu_percent": 0.0
+            },
+            {
+              "backend": "cuda",
+              "repeats": 7,
+              "best_ms": 10.9933,
+              "median_ms": 11.2721,
+              "mean_ms": 11.2782,
+              "p90_ms": 11.6361,
+              "stdev_ms": 0.2901,
+              "work_items": 50000,
+              "throughput_per_s": 4548224.8,
+              "peak_host_kib": 792.2031,
+              "rss_delta_kib": 0.0,
+              "cpu_percent": 76.1,
+              "gpu": {
+                "util_mean_pct": 22.36,
+                "util_peak_pct": 24.0,
+                "mem_peak_mb": 3031.54,
+                "samples": 73
+              }
+            },
+            {
+              "backend": "triton",
+              "repeats": 7,
+              "best_ms": 11.7385,
+              "median_ms": 12.0274,
+              "mean_ms": 12.9185,
+              "p90_ms": 14.6343,
+              "stdev_ms": 1.8276,
+              "work_items": 50000,
+              "throughput_per_s": 4259488.0,
+              "peak_host_kib": 5.0625,
+              "rss_delta_kib": 0.0,
+              "cpu_percent": 87.0,
+              "gpu": {
+                "util_mean_pct": 27.49,
+                "util_peak_pct": 31.0,
+                "mem_peak_mb": 3031.54,
+                "samples": 74
+              }
+            },
+            {
+              "backend": "torch",
+              "repeats": 7,
+              "best_ms": 12.3751,
+              "median_ms": 13.6534,
+              "mean_ms": 13.6253,
+              "p90_ms": 14.99,
+              "stdev_ms": 1.1605,
+              "work_items": 50000,
+              "throughput_per_s": 4040371.4,
+              "peak_host_kib": 1.5234,
+              "rss_delta_kib": 0.0,
+              "cpu_percent": 102.1,
+              "gpu": {
+                "util_mean_pct": 32.89,
+                "util_peak_pct": 33.0,
+                "mem_peak_mb": 3031.54,
+                "samples": 74
+              }
+            },
+            {
+              "backend": "hnsw",
+              "repeats": 7,
+              "best_ms": 0.0561,
+              "median_ms": 0.0582,
+              "mean_ms": 0.0599,
+              "p90_ms": 0.0658,
+              "stdev_ms": 0.0047,
+              "work_items": 50000,
+              "throughput_per_s": 891265283.9,
+              "peak_host_kib": 2.5469,
+              "rss_delta_kib": 0.0,
+              "cpu_percent": 0.0,
+              "recall_at_k": 1.0,
+              "approximate": true
+            }
+          ]
+        },
+        {
+          "params": {
+            "corpus": 200000,
+            "dim": 768,
+            "k": 10
+          },
+          "measurements": [
+            {
+              "backend": "numpy",
+              "repeats": 7,
+              "best_ms": 36.0001,
+              "median_ms": 38.4586,
+              "mean_ms": 38.7061,
+              "p90_ms": 40.2873,
+              "stdev_ms": 1.5914,
+              "work_items": 200000,
+              "throughput_per_s": 5555540.1,
+              "peak_host_kib": 3912.7266,
+              "rss_delta_kib": 0.0,
+              "cpu_percent": 387.0
+            },
+            {
+              "backend": "rust",
+              "repeats": 7,
+              "best_ms": 7.4829,
+              "median_ms": 8.0888,
+              "mean_ms": 8.0548,
+              "p90_ms": 8.4924,
+              "stdev_ms": 0.3988,
+              "work_items": 200000,
+              "throughput_per_s": 26727605.6,
+              "peak_host_kib": 0.8672,
+              "rss_delta_kib": 0.0,
+              "cpu_percent": 2158.3
+            },
+            {
+              "backend": "cuda",
+              "repeats": 7,
+              "best_ms": 43.565,
+              "median_ms": 44.4325,
+              "mean_ms": 44.8853,
+              "p90_ms": 46.7119,
+              "stdev_ms": 1.4056,
+              "work_items": 200000,
+              "throughput_per_s": 4590841.3,
+              "peak_host_kib": 3136.0703,
+              "rss_delta_kib": 0.0,
+              "cpu_percent": 101.6,
+              "gpu": {
+                "util_mean_pct": 42.77,
+                "util_peak_pct": 43.0,
+                "mem_peak_mb": 3031.54,
+                "samples": 77
+              }
+            },
+            {
+              "backend": "triton",
+              "repeats": 7,
+              "best_ms": 45.5453,
+              "median_ms": 46.6154,
+              "mean_ms": 46.5722,
+              "p90_ms": 47.323,
+              "stdev_ms": 0.811,
+              "work_items": 200000,
+              "throughput_per_s": 4391232.5,
+              "peak_host_kib": 5.0625,
+              "rss_delta_kib": 0.0,
+              "cpu_percent": 100.2,
+              "gpu": {
+                "util_mean_pct": 32.14,
+                "util_peak_pct": 33.0,
+                "mem_peak_mb": 3031.54,
+                "samples": 77
+              }
+            },
+            {
+              "backend": "torch",
+              "repeats": 7,
+              "best_ms": 48.9227,
+              "median_ms": 50.1355,
+              "mean_ms": 50.0736,
+              "p90_ms": 50.9248,
+              "stdev_ms": 0.8857,
+              "work_items": 200000,
+              "throughput_per_s": 4088081.8,
+              "peak_host_kib": 1.5234,
+              "rss_delta_kib": 0.0,
+              "cpu_percent": 97.0,
+              "gpu": {
+                "util_mean_pct": 26.37,
+                "util_peak_pct": 27.0,
+                "mem_peak_mb": 3031.54,
+                "samples": 82
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

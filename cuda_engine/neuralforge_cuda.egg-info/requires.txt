@@ -1,0 +1,22 @@
+numpy>=1.26
+
+[all]
+cupy-cuda12x>=13.0
+nvidia-cuda-nvrtc-cu12<13,>=12.8
+torch>=2.7
+
+[cuda]
+cupy-cuda12x>=13.0
+nvidia-cuda-nvrtc-cu12<13,>=12.8
+
+[torch]
+torch>=2.7
+
+[triton]
+torch>=2.7
+
+[triton:platform_system != "Windows"]
+triton>=3.2
+
+[triton:platform_system == "Windows"]
+triton-windows>=3.2

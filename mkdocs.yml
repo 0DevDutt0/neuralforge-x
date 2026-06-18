@@ -1,0 +1,79 @@
+site_name: NeuralForge-X
+site_description: >-
+  High-performance AI infrastructure — vector search, GPU acceleration,
+  retrieval, benchmarking, profiling, and an observable service, in Rust + Python.
+site_author: Devdutt S
+site_url: https://0DevDutt0.github.io/neuralforge-x/
+repo_url: https://github.com/0DevDutt0/neuralforge-x
+repo_name: 0DevDutt0/neuralforge-x
+edit_uri: edit/main/docs/
+copyright: © Devdutt S — MIT OR Apache-2.0
+
+docs_dir: docs
+site_dir: site
+# The SVG/GIF asset folder carries its own authoring README that is not a site page.
+exclude_docs: |
+  assets/gifs/README.md
+
+theme:
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: teal
+      accent: green
+      toggle:
+        icon: material/weather-night
+        name: Switch to light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: teal
+      accent: green
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to dark mode
+  features:
+    - navigation.tracking
+    - navigation.top
+    - navigation.sections
+    - content.code.copy
+    - content.code.annotate
+    - toc.follow
+    - search.suggest
+  icon:
+    repo: fontawesome/brands/github
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+
+plugins:
+  - search
+
+nav:
+  - Home: index.md
+  - Architecture: ARCHITECTURE.md
+  - System Design: SYSTEM_DESIGN.md
+  - API Reference: API_REFERENCE.md
+  - Developer Guide: DEVELOPER_GUIDE.md
+  - Performance: PERFORMANCE.md
+  - Capacity Planning: CAPACITY_PLANNING.md
+  - Security: SECURITY.md
+
+validation:
+  omitted_files: warn
+  absolute_links: ignore
+  unrecognized_links: ignore

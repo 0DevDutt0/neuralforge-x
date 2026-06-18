@@ -1,0 +1,33 @@
+# neuralforge-cuda — GPU acceleration engine (separate, optional package).
+# Kept out of the core wheel so `neuralforge` stays CPU-only and dependency-light.
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "neuralforge-cuda"
+version = "0.1.0"
+description = "GPU acceleration engine (CUDA C++ + Triton) for NeuralForge-X."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT OR Apache-2.0" }
+authors = [{ name = "Devdutt S", email = "devduttshoji123@gmail.com" }]
+dependencies = ["numpy>=1.26"]
+
+[project.optional-dependencies]
+# Raw-CUDA backend. nvidia-cuda-nvrtc-cu12 guarantees a Blackwell-capable (>=12.8)
+# NVRTC even when the system CUDA toolkit is older.
+cuda = ["cupy-cuda12x>=13.0", "nvidia-cuda-nvrtc-cu12>=12.8,<13"]
+torch = ["torch>=2.7"]
+triton = [
+    "torch>=2.7",
+    "triton-windows>=3.2; platform_system == 'Windows'",
+    "triton>=3.2; platform_system != 'Windows'",
+]
+all = ["cupy-cuda12x>=13.0", "nvidia-cuda-nvrtc-cu12>=12.8,<13", "torch>=2.7"]
+
+[tool.setuptools.packages.find]
+include = ["neuralforge_cuda*"]
+
+[tool.setuptools.package-data]
+neuralforge_cuda = ["kernels/*.cu"]

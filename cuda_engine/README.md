@@ -1,0 +1,60 @@
+# cuda_engine — GPU acceleration (`neuralforge_cuda`)
+
+> **Status: implemented (Phase 3).** Hand-written CUDA C++ and Triton kernels for
+> dense similarity & retrieval, validated against the CPU core on an
+> **RTX 5090 (Blackwell, `sm_120`)**.
+
+This is a **hard-GPU** module — no CPU fallback (that is the `neuralforge` core's
+job). Three interchangeable backends implement the same ops, chosen via `backend=`:
+
+| Backend | How | Role |
+|---------|-----|------|
+| `cuda` *(default)* | hand-written CUDA C++ (`kernels/similarity.cu`) compiled by **CuPy NVRTC** | the systems showcase |
+| `triton` | a tiled `@triton.jit` kernel | kernel-optimization showcase |
+| `torch` | PyTorch tensor ops | reference baseline |
+
+## API
+
+```python
+import numpy as np, neuralforge_cuda as gpu
+
+corpus = np.random.rand(200_000, 768).astype(np.float32)
+q = corpus[42]
+
+gpu.gpu_batch_similarity(corpus[:64], corpus, metric="cosine")        # (64, n) ndarray
+gpu.gpu_topk_search(q, corpus, k=10, metric="cosine")                 # (idx[int64], scores[f32])
+gpu.gpu_cosine_similarity(q, corpus[0])                               # float
+
+gpu.gpu_topk_search(q, corpus, 10, backend="triton")                 # pick a backend
+gpu.cuda_available(), gpu.device_info(), gpu.available_backends()
+```
+
+## Kernels
+
+- `row_norms` — per-row L2 norm (cosine).
+- `batch_sim` — `(q, n)` matrix, one thread per output element; fused cosine norm.
+- `score_query` — one query vs all rows (top-k scoring).
+- `pair_reduce` — single-pair cosine/dot/l2 via a block-level shared-memory reduction.
+
+Top-k scoring runs on the GPU; the O(n) selection runs on the host (NumPy
+`argpartition`) — cheap, and it sidesteps CuPy's CUB sort kernels.
+
+## Blackwell (`sm_120`) note
+
+The system CUDA **toolkit** here is 12.6, which cannot codegen for `sm_120`. The
+engine instead uses a **Blackwell-capable NVRTC (≥ 12.8)** — CuPy's bundled
+compiler — by dropping a stale `CUDA_PATH` for the process (see `_cuda.py`). No
+admin or system change; the 13.x driver runs the natively-compiled `sm_120`
+kernels. Installing the CUDA 12.8+ toolkit would additionally enable offline
+`nvcc` builds, but is not required.
+
+## Install & run
+
+```bash
+pip install -e ".[cuda]"          # CuPy + a >=12.8 NVRTC
+pip install -e ".[torch,triton]"  # PyTorch (cu128) + Triton backends
+python -m pytest cuda_engine/tests           # skipped automatically without a GPU
+python cuda_engine/benchmarks/bench_gpu.py   # 4-way benchmark -> benchmark_lab/results
+```
+
+See [../PERFORMANCE.md](../docs/PERFORMANCE.md) for GPU-vs-CPU numbers.

@@ -1,0 +1,50 @@
+{
+  "device": {
+    "name": "NVIDIA GeForce RTX 5090 Laptop GPU",
+    "compute_capability": "120",
+    "total_mem_mb": 24462,
+    "free_mem_mb": 23119,
+    "cupy_version": "14.1.1",
+    "runtime_version": 12090,
+    "driver_version": 13010
+  },
+  "config": {
+    "dim": 768,
+    "n_queries": 64,
+    "top_k": 10,
+    "repeats": 5
+  },
+  "backends": [
+    "cuda",
+    "triton",
+    "torch"
+  ],
+  "results": [
+    {
+      "corpus": 50000,
+      "batch_numpy_ms": 98.943,
+      "batch_rust_ms": 32.538,
+      "batch_cuda_ms": 19.795,
+      "batch_triton_ms": 23.137,
+      "batch_torch_ms": 13.358,
+      "topk_numpy_ms": 1.687,
+      "topk_rust_ms": 1.736,
+      "topk_cuda_ms": 10.169,
+      "topk_triton_ms": 11.522,
+      "topk_torch_ms": 11.463
+    },
+    {
+      "corpus": 200000,
+      "batch_numpy_ms": 378.613,
+      "batch_rust_ms": 218.586,
+      "batch_cuda_ms": 79.863,
+      "batch_triton_ms": 95.899,
+      "batch_torch_ms": 55.244,
+      "topk_numpy_ms": 8.284,
+      "topk_rust_ms": 7.326,
+      "topk_cuda_ms": 42.32,
+      "topk_triton_ms": 46.988,
+      "topk_torch_ms": 47.351
+    }
+  ]
+}

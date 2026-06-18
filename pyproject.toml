@@ -1,0 +1,88 @@
+# NeuralForge-X — Python packaging (maturin backend).
+#
+# The compiled Rust extension (`neuralforge._native`) and the pure-Python
+# wrapper package (`python_sdk/python/neuralforge`) are merged into a single
+# `neuralforge` wheel. Version is sourced dynamically from the crate.
+[build-system]
+requires = ["maturin>=1.7,<2.0"]
+build-backend = "maturin"
+
+[project]
+name = "neuralforge"
+description = "High-performance vector similarity & retrieval kernels (Rust/SIMD core, Python API)."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT OR Apache-2.0" }
+authors = [{ name = "Devdutt S", email = "devduttshoji123@gmail.com" }]
+keywords = ["vector-search", "simd", "embeddings", "similarity", "retrieval", "rust"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Rust",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Libraries",
+]
+dependencies = ["numpy>=1.26"]
+dynamic = ["version"]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "hypothesis>=6.100",
+    "pandas>=2.0",
+    "pydantic>=2.7",
+    "ruff>=0.6",
+    "mypy>=1.11",
+    "maturin>=1.7,<2.0",
+]
+# Optional extras used by some examples (e.g. the DuckDB-over-Parquet baseline
+# in examples/03_vector_db.py). Not required to use the library itself.
+examples = ["duckdb>=1.0"]
+# Optional metric sources for the benchmark lab (CPU%/RSS and GPU%/memory). The
+# harness degrades gracefully when they are absent.
+bench = ["psutil>=5.9", "nvidia-ml-py>=12.0"]
+# Documentation site: build with `python -m mkdocs build` / serve with `... serve`.
+docs = ["mkdocs-material>=9.5"]
+
+[project.urls]
+Homepage = "https://github.com/0DevDutt0/neuralforge-x"
+Repository = "https://github.com/0DevDutt0/neuralforge-x"
+Documentation = "https://github.com/0DevDutt0/neuralforge-x/tree/main/docs"
+
+[tool.maturin]
+manifest-path = "python_sdk/Cargo.toml"
+python-source = "python_sdk/python"
+module-name = "neuralforge._native"
+features = ["pyo3/extension-module"]
+strip = true
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+src = ["python_sdk/python", "tests", "examples", "benchmark_lab"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "UP", "B", "W", "RUF"]
+# The multiplication sign is intentional in benchmark chart/report output
+# (e.g. "7.4×"); allow it rather than escaping every speedup label.
+allowed-confusables = ["×"]
+
+[tool.ruff.lint.per-file-ignores]
+# Triton kernels follow the framework's uppercase naming for pointer and
+# constexpr parameters (Q, C, BLOCK_N, METRIC, ...).
+"cuda_engine/neuralforge_cuda/_triton.py" = ["N803", "N806"]
+
+[tool.mypy]
+# Runtime supports 3.9+ (abi3-py39 wheel); mypy itself can no longer target
+# below 3.10, so we analyse at 3.10 — a strict superset check for 3.9 syntax.
+python_version = "3.10"
+strict = true
+files = ["python_sdk/python/neuralforge"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra -q"
