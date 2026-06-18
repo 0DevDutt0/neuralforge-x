@@ -1,0 +1,39 @@
+[package]
+name = "neuralforge_core"
+description = "SIMD + data-parallel vector similarity and top-k retrieval kernels for NeuralForge-X."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+readme = "README.md"
+keywords = ["simd", "vector-search", "similarity", "rayon", "embeddings"]
+categories = ["science", "algorithms", "concurrency"]
+
+[lib]
+name = "neuralforge_core"
+crate-type = ["rlib"]
+
+[dependencies]
+rayon = { workspace = true }
+thiserror = { workspace = true }
+ndarray = { workspace = true }
+
+[dev-dependencies]
+criterion = { workspace = true }
+proptest = { workspace = true }
+approx = { workspace = true }
+
+[features]
+default = []
+# Opt-in `std::simd` (portable SIMD) path; requires a nightly compiler.
+nightly_simd = []
+
+[[bench]]
+name = "similarity"
+harness = false
+
+[[bench]]
+name = "topk"
+harness = false
