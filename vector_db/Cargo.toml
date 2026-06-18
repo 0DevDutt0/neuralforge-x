@@ -1,0 +1,37 @@
+[package]
+name = "neuralforge_vector_db"
+description = "Hand-written HNSW vector index with metadata filtering and Parquet persistence for NeuralForge-X."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+readme = "README.md"
+keywords = ["hnsw", "vector-database", "ann", "nearest-neighbor", "parquet"]
+categories = ["database-implementations", "algorithms", "science"]
+
+[lib]
+name = "neuralforge_vector_db"
+crate-type = ["rlib"]
+
+[dependencies]
+# The index reuses the SIMD distance kernels from the domain core rather than
+# re-implementing them, so the graph traversal and the brute-force ground truth
+# share exactly one numeric implementation.
+neuralforge_core = { path = "../rust_core" }
+rayon = { workspace = true }
+thiserror = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+arrow = { workspace = true }
+parquet = { workspace = true }
+
+[dev-dependencies]
+criterion = { workspace = true }
+proptest = { workspace = true }
+approx = { workspace = true }
+
+[[bench]]
+name = "hnsw"
+harness = false
