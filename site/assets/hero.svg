@@ -1,0 +1,163 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 340" width="1280" height="340" role="img" aria-label="NeuralForge-X — High-Performance AI Infrastructure Platform">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0a0f1e"/>
+      <stop offset="0.55" stop-color="#0b1224"/>
+      <stop offset="1" stop-color="#0e1b33"/>
+    </linearGradient>
+    <linearGradient id="title" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#76B900"/>
+      <stop offset="0.5" stop-color="#34d399"/>
+      <stop offset="1" stop-color="#38bdf8"/>
+      <animateTransform attributeName="gradientTransform" type="translate"
+        values="-0.5 0; 0.5 0; -0.5 0" dur="6s" repeatCount="indefinite"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#34d399" stop-opacity="0.30"/>
+      <stop offset="1" stop-color="#34d399" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#38bdf8" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#38bdf8" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6"/>
+    </filter>
+    <style>
+      .t{font-family:'Segoe UI',system-ui,Arial,sans-serif}
+      .mono{font-family:'JetBrains Mono','SF Mono',Consolas,monospace}
+    </style>
+  </defs>
+
+  <rect width="1280" height="340" rx="18" fill="url(#bg)"/>
+
+  <!-- drifting ambient glows -->
+  <circle cx="250" cy="150" r="260" fill="url(#glow)">
+    <animate attributeName="cx" values="250;360;250" dur="14s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="1050" cy="220" r="240" fill="url(#glow2)">
+    <animate attributeName="cy" values="220;130;220" dur="12s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- faint grid -->
+  <g stroke="#1b2944" stroke-width="1" opacity="0.5">
+    <path d="M0 80 H1280 M0 160 H1280 M0 240 H1280"/>
+    <path d="M160 0 V340 M320 0 V340 M480 0 V340 M800 0 V340 M960 0 V340 M1120 0 V340"/>
+  </g>
+
+  <!-- ============ left: neural graph motif ============ -->
+  <g transform="translate(70,70)" class="mono">
+    <!-- edges (flowing dashes) -->
+    <g stroke="#2a6f5a" stroke-width="2" fill="none" opacity="0.8">
+      <path d="M40 40 L150 20 M40 40 L150 100 M40 110 L150 100 M40 110 L150 180 M40 180 L150 180"
+        stroke-dasharray="6 8">
+        <animate attributeName="stroke-dashoffset" values="0;-56" dur="1.4s" repeatCount="indefinite"/>
+      </path>
+      <path d="M150 20 L260 60 M150 100 L260 60 M150 100 L260 140 M150 180 L260 140"
+        stroke="#2f6ea8" stroke-dasharray="6 8">
+        <animate attributeName="stroke-dashoffset" values="0;-56" dur="1.7s" repeatCount="indefinite"/>
+      </path>
+    </g>
+    <!-- travelling packets -->
+    <circle r="3.5" fill="#34d399">
+      <animateMotion dur="1.6s" repeatCount="indefinite" path="M40 40 L150 100 L260 60"/>
+    </circle>
+    <circle r="3.5" fill="#38bdf8">
+      <animateMotion dur="2.1s" repeatCount="indefinite" path="M40 110 L150 180 L260 140"/>
+    </circle>
+    <circle r="3" fill="#76B900">
+      <animateMotion dur="1.9s" begin="0.5s" repeatCount="indefinite" path="M40 180 L150 100 L260 60"/>
+    </circle>
+    <!-- nodes (pulsing) -->
+    <g fill="#0b1224" stroke="#34d399" stroke-width="2">
+      <circle cx="40"  cy="40"  r="9"><animate attributeName="r" values="9;11;9" dur="2.4s" repeatCount="indefinite"/></circle>
+      <circle cx="40"  cy="110" r="9"><animate attributeName="r" values="9;11;9" dur="2.4s" begin="0.3s" repeatCount="indefinite"/></circle>
+      <circle cx="40"  cy="180" r="9"><animate attributeName="r" values="9;11;9" dur="2.4s" begin="0.6s" repeatCount="indefinite"/></circle>
+    </g>
+    <g fill="#0b1224" stroke="#38bdf8" stroke-width="2">
+      <circle cx="150" cy="20"  r="9"><animate attributeName="r" values="9;12;9" dur="2.6s" begin="0.2s" repeatCount="indefinite"/></circle>
+      <circle cx="150" cy="100" r="11"><animate attributeName="r" values="11;14;11" dur="2.6s" begin="0.5s" repeatCount="indefinite"/></circle>
+      <circle cx="150" cy="180" r="9"><animate attributeName="r" values="9;12;9" dur="2.6s" begin="0.8s" repeatCount="indefinite"/></circle>
+    </g>
+    <g fill="#0b1224" stroke="#76B900" stroke-width="2.5">
+      <circle cx="260" cy="60"  r="11"><animate attributeName="r" values="11;14;11" dur="2.2s" begin="0.4s" repeatCount="indefinite"/></circle>
+      <circle cx="260" cy="140" r="11"><animate attributeName="r" values="11;14;11" dur="2.2s" begin="0.9s" repeatCount="indefinite"/></circle>
+    </g>
+  </g>
+
+  <!-- ============ center: title + tagline + chips ============ -->
+  <g transform="translate(360,0)">
+    <text x="0" y="150" class="t" font-size="74" font-weight="800" fill="url(#title)" filter="url(#soft)" opacity="0.55">NeuralForge-X</text>
+    <text x="0" y="150" class="t" font-size="74" font-weight="800" fill="url(#title)">NeuralForge-X</text>
+
+    <text x="3" y="188" class="t" font-size="20" font-weight="600" fill="#cdd9ec" opacity="0">
+      High-Performance AI Infrastructure Platform
+      <animate attributeName="opacity" values="0;1" dur="0.9s" begin="0.4s" fill="freeze"/>
+    </text>
+    <text x="3" y="214" class="mono" font-size="14" fill="#7f8fb0" opacity="0">
+      Vector Search · GPU Acceleration · Retrieval · Benchmarking · Observability
+      <animate attributeName="opacity" values="0;1" dur="0.9s" begin="0.7s" fill="freeze"/>
+    </text>
+
+    <!-- tech chips, sequentially revealed -->
+    <g class="mono" font-size="13" font-weight="600">
+      <g opacity="0"><animate attributeName="opacity" values="0;1" dur="0.5s" begin="1.0s" fill="freeze"/>
+        <rect x="3" y="240" width="118" height="28" rx="14" fill="#10231c" stroke="#34d399"/>
+        <text x="62" y="259" text-anchor="middle" fill="#7ee7c0">AVX2 + FMA</text></g>
+      <g opacity="0"><animate attributeName="opacity" values="0;1" dur="0.5s" begin="1.18s" fill="freeze"/>
+        <rect x="131" y="240" width="74" height="28" rx="14" fill="#0f2233" stroke="#38bdf8"/>
+        <text x="168" y="259" text-anchor="middle" fill="#9fdcff">rayon</text></g>
+      <g opacity="0"><animate attributeName="opacity" values="0;1" dur="0.5s" begin="1.36s" fill="freeze"/>
+        <rect x="215" y="240" width="120" height="28" rx="14" fill="#1a2410" stroke="#76B900"/>
+        <text x="275" y="259" text-anchor="middle" fill="#c2e889">CUDA sm_120</text></g>
+      <g opacity="0"><animate attributeName="opacity" values="0;1" dur="0.5s" begin="1.54s" fill="freeze"/>
+        <rect x="345" y="240" width="64" height="28" rx="14" fill="#241016" stroke="#fb7185"/>
+        <text x="377" y="259" text-anchor="middle" fill="#ffb3bf">Triton</text></g>
+      <g opacity="0"><animate attributeName="opacity" values="0;1" dur="0.5s" begin="1.72s" fill="freeze"/>
+        <rect x="419" y="240" width="64" height="28" rx="14" fill="#221a10" stroke="#fbbf24"/>
+        <text x="451" y="259" text-anchor="middle" fill="#ffe08a">HNSW</text></g>
+    </g>
+  </g>
+
+  <!-- ============ right: SIMD lanes + GPU ring ============ -->
+  <g transform="translate(900,70)">
+    <text x="0" y="-16" class="mono" font-size="12" fill="#7f8fb0">8-wide SIMD lanes</text>
+    <g>
+      <rect x="0"   y="0" width="20" height="120" rx="4" fill="#101a30"/>
+      <rect x="28"  y="0" width="20" height="120" rx="4" fill="#101a30"/>
+      <rect x="56"  y="0" width="20" height="120" rx="4" fill="#101a30"/>
+      <rect x="84"  y="0" width="20" height="120" rx="4" fill="#101a30"/>
+      <rect x="112" y="0" width="20" height="120" rx="4" fill="#101a30"/>
+      <rect x="140" y="0" width="20" height="120" rx="4" fill="#101a30"/>
+      <rect x="168" y="0" width="20" height="120" rx="4" fill="#101a30"/>
+      <rect x="196" y="0" width="20" height="120" rx="4" fill="#101a30"/>
+    </g>
+    <g fill="#34d399">
+      <rect x="0"   y="120" width="20" height="0" rx="4"><animate attributeName="height" values="0;120;0" dur="2.2s" begin="0.0s" repeatCount="indefinite"/><animate attributeName="y" values="120;0;120" dur="2.2s" begin="0.0s" repeatCount="indefinite"/></rect>
+      <rect x="28"  y="120" width="20" height="0" rx="4"><animate attributeName="height" values="0;120;0" dur="2.2s" begin="0.1s" repeatCount="indefinite"/><animate attributeName="y" values="120;0;120" dur="2.2s" begin="0.1s" repeatCount="indefinite"/></rect>
+      <rect x="56"  y="120" width="20" height="0" rx="4"><animate attributeName="height" values="0;120;0" dur="2.2s" begin="0.2s" repeatCount="indefinite"/><animate attributeName="y" values="120;0;120" dur="2.2s" begin="0.2s" repeatCount="indefinite"/></rect>
+      <rect x="84"  y="120" width="20" height="0" rx="4"><animate attributeName="height" values="0;120;0" dur="2.2s" begin="0.3s" repeatCount="indefinite"/><animate attributeName="y" values="120;0;120" dur="2.2s" begin="0.3s" repeatCount="indefinite"/></rect>
+      <rect x="112" y="120" width="20" height="0" rx="4"><animate attributeName="height" values="0;120;0" dur="2.2s" begin="0.4s" repeatCount="indefinite"/><animate attributeName="y" values="120;0;120" dur="2.2s" begin="0.4s" repeatCount="indefinite"/></rect>
+      <rect x="140" y="120" width="20" height="0" rx="4"><animate attributeName="height" values="0;120;0" dur="2.2s" begin="0.5s" repeatCount="indefinite"/><animate attributeName="y" values="120;0;120" dur="2.2s" begin="0.5s" repeatCount="indefinite"/></rect>
+      <rect x="168" y="120" width="20" height="0" rx="4"><animate attributeName="height" values="0;120;0" dur="2.2s" begin="0.6s" repeatCount="indefinite"/><animate attributeName="y" values="120;0;120" dur="2.2s" begin="0.6s" repeatCount="indefinite"/></rect>
+      <rect x="196" y="120" width="20" height="0" rx="4"><animate attributeName="height" values="0;120;0" dur="2.2s" begin="0.7s" repeatCount="indefinite"/><animate attributeName="y" values="120;0;120" dur="2.2s" begin="0.7s" repeatCount="indefinite"/></rect>
+    </g>
+    <!-- rotating GPU ring -->
+    <g transform="translate(108,200)">
+      <circle r="34" fill="none" stroke="#1b2944" stroke-width="6"/>
+      <circle r="34" fill="none" stroke="#76B900" stroke-width="6" stroke-linecap="round" stroke-dasharray="60 154">
+        <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="3.5s" repeatCount="indefinite"/>
+      </circle>
+      <text x="0" y="5" text-anchor="middle" class="mono" font-size="12" fill="#c2e889" font-weight="700">GPU</text>
+    </g>
+  </g>
+
+  <!-- bottom data stream -->
+  <g fill="#34d399" opacity="0.85">
+    <circle cx="0" cy="318" r="2.5"><animate attributeName="cx" values="-20;1300" dur="3s" repeatCount="indefinite"/></circle>
+    <circle cx="0" cy="318" r="2"><animate attributeName="cx" values="-20;1300" dur="3s" begin="0.7s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;0.3;1" dur="3s" repeatCount="indefinite"/></circle>
+    <circle cx="0" cy="318" r="2.5" fill="#38bdf8"><animate attributeName="cx" values="-20;1300" dur="3s" begin="1.4s" repeatCount="indefinite"/></circle>
+    <circle cx="0" cy="318" r="2" fill="#76B900"><animate attributeName="cx" values="-20;1300" dur="3s" begin="2.1s" repeatCount="indefinite"/></circle>
+  </g>
+  <rect x="1" y="1" width="1278" height="338" rx="18" fill="none" stroke="#22304d" stroke-width="1.5"/>
+</svg>

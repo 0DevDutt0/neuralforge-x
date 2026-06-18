@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 300" width="980" height="300" role="img" aria-label="Vector search pipeline: query, SIMD scan, per-thread top-k heaps, merged results">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0b1020"/><stop offset="1" stop-color="#0e1830"/></linearGradient>
+    <style>.t{font-family:'Segoe UI',system-ui,Arial,sans-serif;fill:#e6edf3}.m{font-family:'JetBrains Mono',Consolas,monospace;fill:#9fb0c9}.lbl{font-family:'Segoe UI',system-ui,sans-serif;fill:#6c7a96;font-size:12px}</style>
+  </defs>
+  <rect width="980" height="300" rx="14" fill="url(#bg)" stroke="#22304d" stroke-width="1.5"/>
+  <text x="24" y="30" class="t" font-size="16" font-weight="700">Vector search pipeline <tspan class="m" font-size="12" fill="#6c7a96">— SIMD scan → per-thread heaps → merge</tspan></text>
+
+  <!-- connectors -->
+  <g stroke="#2a3a59" stroke-width="2" fill="none">
+    <path d="M150 150 H190"/><path d="M420 150 H460"/><path d="M690 150 H730"/>
+  </g>
+  <!-- flowing particles across the whole pipe -->
+  <g>
+    <circle r="3.5" fill="#34d399"><animateMotion dur="2.4s" repeatCount="indefinite" path="M150 150 H930"/></circle>
+    <circle r="3" fill="#38bdf8"><animateMotion dur="2.4s" begin="0.8s" repeatCount="indefinite" path="M150 150 H930"/></circle>
+    <circle r="3" fill="#76B900"><animateMotion dur="2.4s" begin="1.6s" repeatCount="indefinite" path="M150 150 H930"/></circle>
+  </g>
+
+  <!-- P1: query -->
+  <g>
+    <rect x="24" y="110" width="126" height="80" rx="10" fill="#101a30" stroke="#34d399"/>
+    <text x="87" y="138" text-anchor="middle" class="t" font-size="14" font-weight="700">query</text>
+    <g fill="#34d399"><rect x="40" y="152" width="14" height="20" rx="2"/><rect x="58" y="152" width="14" height="20" rx="2" opacity="0.8"/><rect x="76" y="152" width="14" height="20" rx="2" opacity="0.6"/><rect x="94" y="152" width="14" height="20" rx="2" opacity="0.8"/><rect x="112" y="152" width="14" height="20" rx="2" opacity="0.7"/></g>
+    <text x="87" y="208" text-anchor="middle" class="lbl">1×d float32</text>
+  </g>
+
+  <!-- P2: corpus + sweeping SIMD scan -->
+  <g>
+    <rect x="190" y="78" width="230" height="150" rx="10" fill="#0d1526" stroke="#2a3a59"/>
+    <text x="305" y="70" text-anchor="middle" class="lbl">corpus  N × d  (row-major, contiguous)</text>
+    <g fill="#1b2944">
+      <rect x="204" y="92"  width="202" height="12" rx="3"/><rect x="204" y="110" width="202" height="12" rx="3"/>
+      <rect x="204" y="128" width="202" height="12" rx="3"/><rect x="204" y="146" width="202" height="12" rx="3"/>
+      <rect x="204" y="164" width="202" height="12" rx="3"/><rect x="204" y="182" width="202" height="12" rx="3"/>
+      <rect x="204" y="200" width="202" height="12" rx="3"/>
+    </g>
+    <!-- sweeping scan highlight -->
+    <rect x="204" y="92" width="202" height="12" rx="3" fill="#34d399" opacity="0.85">
+      <animate attributeName="y" values="92;200;92" dur="2.0s" repeatCount="indefinite"/>
+    </rect>
+    <text x="305" y="246" text-anchor="middle" class="lbl">AVX2 + FMA dot · 33 Gelem/s</text>
+  </g>
+
+  <!-- P3: per-thread heaps -->
+  <g>
+    <rect x="460" y="78" width="230" height="150" rx="10" fill="#0d1526" stroke="#2a3a59"/>
+    <text x="575" y="70" text-anchor="middle" class="lbl">rayon · per-thread size-k heaps</text>
+    <g>
+      <!-- 4 heaps, bars filling staggered -->
+      <g transform="translate(486,0)"><rect x="0" y="120" width="30" height="0" fill="#38bdf8" rx="3"><animate attributeName="height" values="0;88;0" dur="2.2s" begin="0.0s" repeatCount="indefinite"/><animate attributeName="y" values="208;120;208" dur="2.2s" begin="0.0s" repeatCount="indefinite"/></rect></g>
+      <g transform="translate(528,0)"><rect x="0" y="120" width="30" height="0" fill="#38bdf8" rx="3"><animate attributeName="height" values="0;72;0" dur="2.2s" begin="0.3s" repeatCount="indefinite"/><animate attributeName="y" values="208;136;208" dur="2.2s" begin="0.3s" repeatCount="indefinite"/></rect></g>
+      <g transform="translate(570,0)"><rect x="0" y="120" width="30" height="0" fill="#38bdf8" rx="3"><animate attributeName="height" values="0;96;0" dur="2.2s" begin="0.6s" repeatCount="indefinite"/><animate attributeName="y" values="208;112;208" dur="2.2s" begin="0.6s" repeatCount="indefinite"/></rect></g>
+      <g transform="translate(612,0)"><rect x="0" y="120" width="30" height="0" fill="#38bdf8" rx="3"><animate attributeName="height" values="0;80;0" dur="2.2s" begin="0.9s" repeatCount="indefinite"/><animate attributeName="y" values="208;128;208" dur="2.2s" begin="0.9s" repeatCount="indefinite"/></rect></g>
+    </g>
+    <text x="575" y="246" text-anchor="middle" class="lbl">O(k · threads) memory</text>
+  </g>
+
+  <!-- P4: merged results -->
+  <g>
+    <rect x="730" y="78" width="226" height="150" rx="10" fill="#101a30" stroke="#fbbf24"/>
+    <text x="843" y="70" text-anchor="middle" class="lbl">top-k · best first</text>
+    <g class="m" font-size="12">
+      <g opacity="0"><animate attributeName="opacity" values="0;1" dur="0.4s" begin="0.6s" fill="freeze"/><rect x="744" y="92"  width="198" height="20" rx="4" fill="#1a2410"/><rect x="744" y="92" width="186" height="20" rx="4" fill="#fbbf24" opacity="0.25"/><text x="752" y="107" fill="#ffe08a">#1  id 8123   0.94</text></g>
+      <g opacity="0"><animate attributeName="opacity" values="0;1" dur="0.4s" begin="0.9s" fill="freeze"/><rect x="744" y="116" width="198" height="20" rx="4" fill="#1a2410"/><rect x="744" y="116" width="170" height="20" rx="4" fill="#fbbf24" opacity="0.22"/><text x="752" y="131" fill="#ffe08a">#2  id 91     0.92</text></g>
+      <g opacity="0"><animate attributeName="opacity" values="0;1" dur="0.4s" begin="1.2s" fill="freeze"/><rect x="744" y="140" width="198" height="20" rx="4" fill="#1a2410"/><rect x="744" y="140" width="156" height="20" rx="4" fill="#fbbf24" opacity="0.2"/><text x="752" y="155" fill="#ffe08a">#3  id 4570   0.90</text></g>
+      <g opacity="0"><animate attributeName="opacity" values="0;1" dur="0.4s" begin="1.5s" fill="freeze"/><rect x="744" y="164" width="198" height="20" rx="4" fill="#1a2410"/><rect x="744" y="164" width="138" height="20" rx="4" fill="#fbbf24" opacity="0.18"/><text x="752" y="179" fill="#ffe08a">#4  id 377    0.88</text></g>
+      <g opacity="0"><animate attributeName="opacity" values="0;1" dur="0.4s" begin="1.8s" fill="freeze"/><rect x="744" y="188" width="198" height="20" rx="4" fill="#1a2410"/><rect x="744" y="188" width="120" height="20" rx="4" fill="#fbbf24" opacity="0.16"/><text x="752" y="203" fill="#ffe08a">#5  id 1290   0.86</text></g>
+    </g>
+  </g>
+</svg>

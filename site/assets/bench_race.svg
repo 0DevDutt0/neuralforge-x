@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 340" width="900" height="340" role="img" aria-label="Benchmark race: batch cosine speedup vs NumPy across backends">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0b1020"/><stop offset="1" stop-color="#0e1830"/></linearGradient>
+    <style>.t{font-family:'Segoe UI',system-ui,Arial,sans-serif;fill:#e6edf3}.m{font-family:'JetBrains Mono',Consolas,monospace}.lbl{font-family:'Segoe UI',system-ui,sans-serif;fill:#cdd9ec;font-size:14px;font-weight:600}</style>
+  </defs>
+  <rect width="900" height="340" rx="14" fill="url(#bg)" stroke="#22304d" stroke-width="1.5"/>
+  <text x="28" y="34" class="t" font-size="17" font-weight="800">Batch cosine — speedup vs NumPy</text>
+  <text x="28" y="56" class="m" font-size="12" fill="#7f8fb0">50,000 × 768 · 64 queries · best-of-7 · RTX 5090 + Intel Core Ultra 9. Higher is better.</text>
+
+  <!-- gridlines at 2x,4x,6x,8x (track starts x=150, 80px per x) -->
+  <g stroke="#1b2944" stroke-width="1" class="m" font-size="11" fill="#54627d">
+    <line x1="150" y1="78" x2="150" y2="312"/>
+    <line x1="310" y1="78" x2="310" y2="312"/><text x="310" y="330" text-anchor="middle">2×</text>
+    <line x1="470" y1="78" x2="470" y2="312"/><text x="470" y="330" text-anchor="middle">4×</text>
+    <line x1="630" y1="78" x2="630" y2="312"/><text x="630" y="330" text-anchor="middle">6×</text>
+    <line x1="790" y1="78" x2="790" y2="312"/><text x="790" y="330" text-anchor="middle">8×</text>
+    <text x="150" y="330" text-anchor="middle">0</text>
+  </g>
+
+  <!-- rows: y, color, label, value, barwidth(px = value*80) -->
+  <!-- NumPy 1.0x = 80 -->
+  <g><text x="138" y="98" text-anchor="end" class="lbl">NumPy</text>
+    <rect x="150" y="84" height="22" rx="6" fill="#38bdf8" width="0"><animate attributeName="width" values="0;80" dur="1.0s" begin="0.2s" fill="freeze"/></rect>
+    <text class="m" font-size="13" font-weight="700" fill="#9fdcff" y="100" opacity="0"><animate attributeName="opacity" values="0;1" dur="0.3s" begin="1.0s" fill="freeze"/><animate attributeName="x" values="160;238" dur="1.0s" begin="0.2s" fill="freeze"/>1.0×</text></g>
+  <!-- Rust 3.0x = 240 -->
+  <g><text x="138" y="138" text-anchor="end" class="lbl">Rust (CPU)</text>
+    <rect x="150" y="124" height="22" rx="6" fill="#34d399" width="0"><animate attributeName="width" values="0;240" dur="1.1s" begin="0.4s" fill="freeze"/></rect>
+    <text class="m" font-size="13" font-weight="700" fill="#7ee7c0" y="140" opacity="0"><animate attributeName="opacity" values="0;1" dur="0.3s" begin="1.3s" fill="freeze"/><animate attributeName="x" values="160;398" dur="1.1s" begin="0.4s" fill="freeze"/>3.0×</text></g>
+  <!-- Triton 4.2x = 336 -->
+  <g><text x="138" y="178" text-anchor="end" class="lbl">Triton</text>
+    <rect x="150" y="164" height="22" rx="6" fill="#f472b6" width="0"><animate attributeName="width" values="0;336" dur="1.2s" begin="0.6s" fill="freeze"/></rect>
+    <text class="m" font-size="13" font-weight="700" fill="#ffb3d6" y="180" opacity="0"><animate attributeName="opacity" values="0;1" dur="0.3s" begin="1.6s" fill="freeze"/><animate attributeName="x" values="160;494" dur="1.2s" begin="0.6s" fill="freeze"/>4.2×</text></g>
+  <!-- CUDA 5.0x = 400 -->
+  <g><text x="138" y="218" text-anchor="end" class="lbl">CUDA</text>
+    <rect x="150" y="204" height="22" rx="6" fill="#a78bfa" width="0"><animate attributeName="width" values="0;400" dur="1.3s" begin="0.8s" fill="freeze"/></rect>
+    <text class="m" font-size="13" font-weight="700" fill="#cbb8ff" y="220" opacity="0"><animate attributeName="opacity" values="0;1" dur="0.3s" begin="1.9s" fill="freeze"/><animate attributeName="x" values="160;558" dur="1.3s" begin="0.8s" fill="freeze"/>5.0×</text></g>
+  <!-- PyTorch 7.4x = 592 (winner) -->
+  <g><text x="138" y="258" text-anchor="end" class="lbl">PyTorch</text>
+    <rect x="150" y="244" height="22" rx="6" fill="#fb7185" width="0"><animate attributeName="width" values="0;592" dur="1.5s" begin="1.0s" fill="freeze"/></rect>
+    <text class="m" font-size="14" font-weight="800" fill="#ffd0d6" y="261" opacity="0"><animate attributeName="opacity" values="0;1" dur="0.3s" begin="2.3s" fill="freeze"/><animate attributeName="x" values="160;750" dur="1.5s" begin="1.0s" fill="freeze"/>7.4× 🏆</text></g>
+
+  <!-- pulse highlight on winner bar -->
+  <rect x="150" y="244" height="22" rx="6" fill="#fb7185" width="592" opacity="0">
+    <animate attributeName="opacity" values="0;0;0.5;0" dur="2s" begin="2.5s" repeatCount="indefinite"/>
+  </rect>
+</svg>
