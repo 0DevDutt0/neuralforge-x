@@ -1,0 +1,73 @@
+# NeuralForge-X — observability stack (Phase 7).
+#
+#   cd observability && docker compose up --build
+#
+# Then:
+#   - service API ............ http://localhost:8080  (/healthz /readyz /metrics /v1/*)
+#   - Prometheus ............. http://localhost:9090
+#   - Grafana ................ http://localhost:3000  (anonymous admin; dashboard preloaded)
+#   - Jaeger (traces) ........ http://localhost:16686
+#
+# Flow: service --OTLP/gRPC--> otel-collector --> Jaeger (traces); Prometheus
+# scrapes the service and the collector; Grafana visualizes both.
+
+name: neuralforge-observability
+
+services:
+  service:
+    build:
+      context: ..
+      dockerfile: observability/Dockerfile
+    image: neuralforge-service:dev
+    environment:
+      NFX_BIND: 0.0.0.0:8080
+      NFX_DIM: "768"
+      NFX_METRIC: cosine
+      NFX_OTEL_ENDPOINT: http://otel-collector:4317
+      NFX_SERVICE_NAME: neuralforge-service
+      RUST_LOG: info,neuralforge_service=debug
+    ports:
+      - "8080:8080"
+    depends_on:
+      - otel-collector
+
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:0.116.0
+    command: ["--config=/etc/otel-collector-config.yaml"]
+    volumes:
+      - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml:ro
+    ports:
+      - "4317:4317"   # OTLP gRPC
+      - "8889:8889"   # Prometheus exporter (collector's own pipeline metrics)
+    depends_on:
+      - jaeger
+
+  jaeger:
+    image: jaegertracing/all-in-one:1.62.0
+    environment:
+      COLLECTOR_OTLP_ENABLED: "true"
+    ports:
+      - "16686:16686" # Jaeger UI
+
+  prometheus:
+    image: prom/prometheus:v2.55.1
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - "9090:9090"
+
+  grafana:
+    image: grafana/grafana:11.3.1
+    environment:
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Admin
+      GF_AUTH_DISABLE_LOGIN_FORM: "true"
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus

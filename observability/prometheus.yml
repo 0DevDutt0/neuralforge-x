@@ -1,0 +1,18 @@
+# Prometheus scrape configuration for the NeuralForge-X stack.
+
+global:
+  scrape_interval: 5s
+  evaluation_interval: 5s
+
+scrape_configs:
+  - job_name: neuralforge-service
+    static_configs:
+      - targets: ["service:8080"]
+        labels:
+          service: neuralforge-service
+
+  - job_name: otel-collector
+    static_configs:
+      - targets: ["otel-collector:8889"]
+        labels:
+          service: otel-collector

@@ -1,0 +1,33 @@
+# OpenTelemetry Collector — receives OTLP spans from the service and forwards
+# them to Jaeger; exposes its own pipeline metrics for Prometheus to scrape.
+
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:4317
+
+processors:
+  batch: {}
+
+exporters:
+  # Traces -> Jaeger (which accepts OTLP on 4317 with COLLECTOR_OTLP_ENABLED).
+  otlp/jaeger:
+    endpoint: jaeger:4317
+    tls:
+      insecure: true
+  # Collector self-observability, scraped by Prometheus on :8889.
+  prometheus:
+    endpoint: 0.0.0.0:8889
+  debug:
+    verbosity: normal
+
+service:
+  telemetry:
+    metrics:
+      address: 0.0.0.0:8888
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [otlp/jaeger, debug]

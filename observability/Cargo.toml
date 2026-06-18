@@ -1,0 +1,59 @@
+[package]
+name = "neuralforge_service"
+description = "Observability-instrumented HTTP service exposing the NeuralForge-X engine."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+publish = false
+
+[lib]
+name = "neuralforge_service"
+path = "src/lib.rs"
+
+[[bin]]
+name = "neuralforge_service"
+path = "src/main.rs"
+
+[features]
+default = []
+# Opt-in OpenTelemetry: exports request spans over OTLP/HTTP to a collector.
+# Off by default so the core service (metrics + health + structured logs) builds
+# without the heavier OTel dependency tree; the Docker image turns it on.
+otel = [
+    "dep:opentelemetry",
+    "dep:opentelemetry_sdk",
+    "dep:opentelemetry-otlp",
+    "dep:tracing-opentelemetry",
+]
+
+[dependencies]
+# Serve the real engine in-process — no FFI, no extra runtime.
+neuralforge_core = { path = "../rust_core" }
+neuralforge_vector_db = { path = "../vector_db" }
+
+tokio = { workspace = true }
+axum = { workspace = true }
+tower-http = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+metrics = { workspace = true }
+metrics-exporter-prometheus = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+anyhow = { workspace = true }
+thiserror = { workspace = true }
+
+opentelemetry = { workspace = true, optional = true }
+opentelemetry_sdk = { workspace = true, optional = true }
+opentelemetry-otlp = { workspace = true, optional = true }
+tracing-opentelemetry = { workspace = true, optional = true }
+
+[dev-dependencies]
+tower = { workspace = true, features = ["util"] }
+serde_json = { workspace = true }
+neuralforge_core = { path = "../rust_core" }
+metrics-exporter-prometheus = { workspace = true }
+tokio = { workspace = true }
