@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" width="960" height="560" role="img" aria-label="NeuralForge-X hexagonal architecture">
+  <defs>
+    <linearGradient id="abg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0b1020"/><stop offset="1" stop-color="#0e1830"/>
+    </linearGradient>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#5b6b88"/>
+    </marker>
+  </defs>
+  <style>
+    .lbl{font-family:Segoe UI,system-ui,Arial,sans-serif;fill:#e6edf3}
+    .sub{font-family:Segoe UI,system-ui,Arial,sans-serif;fill:#9fb0c9;font-size:13px}
+    .band{font-family:Segoe UI,system-ui,Arial,sans-serif;fill:#6c7a96;font-size:12px;letter-spacing:2px}
+    .done{fill:#0d1a14;stroke:#34d399}
+    .core{fill:#10231a;stroke:#76B900}
+    .plan{fill:#141a2c;stroke:#46557a;stroke-dasharray:6 5}
+  </style>
+
+  <rect width="960" height="560" rx="16" fill="url(#abg)"/>
+  <text x="32" y="44" class="lbl" font-size="24" font-weight="800">NeuralForge-X — Hexagonal Architecture</text>
+
+  <!-- Inbound band -->
+  <text x="32" y="84" class="band">INBOUND ADAPTERS</text>
+  <g>
+    <rect x="120" y="96" width="300" height="74" rx="12" class="done" stroke-width="2"/>
+    <text x="270" y="128" text-anchor="middle" class="lbl" font-size="18" font-weight="700">Python SDK</text>
+    <text x="270" y="150" text-anchor="middle" class="sub">PyO3 · NumPy zero-copy · typed</text>
+  </g>
+  <g>
+    <rect x="540" y="96" width="300" height="74" rx="12" class="plan" stroke-width="2"/>
+    <text x="690" y="128" text-anchor="middle" class="lbl" font-size="18" font-weight="700">HTTP Service</text>
+    <text x="690" y="150" text-anchor="middle" class="sub">axum/FastAPI · Phase 7</text>
+  </g>
+
+  <!-- Core -->
+  <text x="32" y="214" class="band">DOMAIN CORE</text>
+  <g>
+    <rect x="120" y="226" width="720" height="120" rx="14" class="core" stroke-width="2.5"/>
+    <text x="480" y="262" text-anchor="middle" class="lbl" font-size="20" font-weight="800">rust_core</text>
+    <text x="480" y="290" text-anchor="middle" class="sub">AVX2 + FMA kernels · rayon data-parallelism</text>
+    <text x="480" y="312" text-anchor="middle" class="sub">dot · cosine · l2 · batch_similarity · top_k_search</text>
+    <text x="480" y="332" text-anchor="middle" class="sub">MatrixView (zero-copy) · Metric · typed errors</text>
+  </g>
+
+  <!-- Accelerator + Outbound -->
+  <text x="32" y="392" class="band">ACCELERATOR</text>
+  <g>
+    <rect x="120" y="404" width="320" height="96" rx="12" class="plan" stroke-width="2"/>
+    <text x="280" y="438" text-anchor="middle" class="lbl" font-size="18" font-weight="700">cuda_engine</text>
+    <text x="280" y="460" text-anchor="middle" class="sub">CUDA C++ + Triton kernels</text>
+    <text x="280" y="480" text-anchor="middle" class="sub">RTX 5090 · Blackwell sm_120 · Phase 3</text>
+  </g>
+  <text x="520" y="392" class="band">OUTBOUND ADAPTERS</text>
+  <g>
+    <rect x="520" y="404" width="320" height="96" rx="12" class="plan" stroke-width="2"/>
+    <text x="680" y="438" text-anchor="middle" class="lbl" font-size="18" font-weight="700">vector_db · observability</text>
+    <text x="680" y="460" text-anchor="middle" class="sub">HNSW · DuckDB / Parquet (P4)</text>
+    <text x="680" y="480" text-anchor="middle" class="sub">OpenTelemetry · Prometheus (P7)</text>
+  </g>
+
+  <!-- arrows -->
+  <g stroke="#5b6b88" stroke-width="2" fill="none" marker-end="url(#arrow)">
+    <path d="M270,170 L300,224"/>
+    <path d="M690,170 L660,224"/>
+    <path d="M300,346 L290,402"/>
+    <path d="M660,346 L670,402"/>
+  </g>
+  <text x="318" y="392" class="sub" font-size="11" fill="#6c7a96">kernel port</text>
+
+  <!-- legend -->
+  <g transform="translate(120,524)">
+    <rect width="16" height="12" rx="3" class="core" stroke-width="2"/><text x="24" y="11" class="sub">implemented</text>
+    <rect x="150" width="16" height="12" rx="3" class="plan" stroke-width="2"/><text x="174" y="11" class="sub">planned (roadmap)</text>
+  </g>
+</svg>

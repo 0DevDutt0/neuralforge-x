@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 300" width="960" height="300" role="img" aria-label="Observability dashboard: request rate, p95 latency, index size and readiness">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0b1020"/><stop offset="1" stop-color="#0e1830"/></linearGradient>
+    <linearGradient id="areaG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#34d399" stop-opacity="0.45"/><stop offset="1" stop-color="#34d399" stop-opacity="0"/></linearGradient>
+    <linearGradient id="areaB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#38bdf8" stop-opacity="0.40"/><stop offset="1" stop-color="#38bdf8" stop-opacity="0"/></linearGradient>
+    <style>.t{font-family:'Segoe UI',system-ui,sans-serif;fill:#e6edf3}.m{font-family:'JetBrains Mono',Consolas,monospace}.lbl{font-family:'Segoe UI',system-ui,sans-serif;fill:#7f8fb0;font-size:12px}</style>
+  </defs>
+  <rect width="960" height="300" rx="14" fill="url(#bg)" stroke="#22304d" stroke-width="1.5"/>
+
+  <!-- header -->
+  <text x="24" y="34" class="t" font-size="16" font-weight="700">neuralforge_service — observability</text>
+  <g><circle cx="356" cy="29" r="6" fill="#34d399"><animate attributeName="opacity" values="1;0.25;1" dur="1.4s" repeatCount="indefinite"/></circle>
+     <text x="370" y="34" class="m" font-size="13" fill="#7ee7c0">live</text></g>
+  <text x="936" y="34" text-anchor="end" class="lbl">Prometheus · OTel · Grafana</text>
+
+  <!-- Panel A: request rate -->
+  <g>
+    <rect x="24" y="54" width="296" height="210" rx="10" fill="#0d1526" stroke="#1b2944"/>
+    <text x="40" y="80" class="lbl">nfx_http_requests_total · rate</text>
+    <text x="40" y="112" class="t" font-size="26" font-weight="800" fill="#7ee7c0">1.4k<tspan font-size="13" fill="#6c7a96"> req/s</tspan></text>
+    <!-- area + line -->
+    <path d="M40 230 L40 200 L78 188 L116 205 L154 168 L192 182 L230 150 L268 162 L304 140 L304 230 Z" fill="url(#areaG)" opacity="0"><animate attributeName="opacity" values="0;1" dur="0.8s" begin="0.3s" fill="freeze"/></path>
+    <path d="M40 200 L78 188 L116 205 L154 168 L192 182 L230 150 L268 162 L304 140" fill="none" stroke="#34d399" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="360" stroke-dashoffset="360"><animate attributeName="stroke-dashoffset" values="360;0" dur="1.4s" begin="0.2s" fill="freeze"/></path>
+    <circle r="4" fill="#34d399"><animateMotion dur="2.8s" begin="1.6s" repeatCount="indefinite" path="M40 200 L78 188 L116 205 L154 168 L192 182 L230 150 L268 162 L304 140"/></circle>
+  </g>
+
+  <!-- Panel B: p95 latency -->
+  <g>
+    <rect x="336" y="54" width="296" height="210" rx="10" fill="#0d1526" stroke="#1b2944"/>
+    <text x="352" y="80" class="lbl">nfx_http_request_duration · p95</text>
+    <text x="352" y="112" class="t" font-size="26" font-weight="800" fill="#9fdcff">2.3<tspan font-size="13" fill="#6c7a96"> ms</tspan></text>
+    <path d="M352 230 L352 196 L390 200 L428 186 L466 192 L504 176 L542 184 L580 170 L616 178 L616 230 Z" fill="url(#areaB)" opacity="0"><animate attributeName="opacity" values="0;1" dur="0.8s" begin="0.5s" fill="freeze"/></path>
+    <path d="M352 196 L390 200 L428 186 L466 192 L504 176 L542 184 L580 170 L616 178" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="280" stroke-dashoffset="280"><animate attributeName="stroke-dashoffset" values="280;0" dur="1.4s" begin="0.4s" fill="freeze"/></path>
+    <circle r="4" fill="#38bdf8"><animateMotion dur="3.0s" begin="1.8s" repeatCount="indefinite" path="M352 196 L390 200 L428 186 L466 192 L504 176 L542 184 L580 170 L616 178"/></circle>
+  </g>
+
+  <!-- Panel C: index gauge + readiness -->
+  <g>
+    <rect x="648" y="54" width="288" height="210" rx="10" fill="#0d1526" stroke="#1b2944"/>
+    <text x="664" y="80" class="lbl">nfx_index_vectors</text>
+    <text x="664" y="118" class="t" font-size="30" font-weight="800" fill="#ffe08a" opacity="0">128,000<animate attributeName="opacity" values="0;1" dur="0.6s" begin="1.0s" fill="freeze"/></text>
+    <!-- readiness donut -->
+    <g transform="translate(792,190)">
+      <circle r="46" fill="none" stroke="#1b2944" stroke-width="10"/>
+      <circle r="46" fill="none" stroke="#34d399" stroke-width="10" stroke-linecap="round" stroke-dasharray="289" stroke-dashoffset="289" transform="rotate(-90)"><animate attributeName="stroke-dashoffset" values="289;14" dur="1.6s" begin="0.8s" fill="freeze"/></circle>
+      <text x="0" y="-2" text-anchor="middle" class="t" font-size="15" font-weight="800" fill="#7ee7c0">/readyz</text>
+      <text x="0" y="18" text-anchor="middle" class="m" font-size="12" fill="#6c7a96">200 OK</text>
+    </g>
+    <text x="664" y="150" class="m" font-size="12" fill="#6c7a96">dim 768 · cosine</text>
+  </g>
+
+  <!-- scanning highlight across all panels -->
+  <rect x="24" y="54" width="2" height="210" fill="#34d399" opacity="0.35"><animate attributeName="x" values="24;936;24" dur="6s" repeatCount="indefinite"/></rect>
+</svg>
