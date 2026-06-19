@@ -22,7 +22,7 @@
   <img alt="CI"       src="https://github.com/0DevDutt0/neuralforge-x/actions/workflows/ci.yml/badge.svg">
   <img alt="Docs"     src="https://github.com/0DevDutt0/neuralforge-x/actions/workflows/docs.yml/badge.svg">
   <img alt="Tests"    src="https://img.shields.io/badge/tests-passing-success">
-  <img alt="Coverage" src="https://img.shields.io/badge/coverage-tracked-blue">
+  <img alt="Coverage" src="https://img.shields.io/badge/coverage-85%25%20lines-brightgreen">
   <img alt="License"  src="https://img.shields.io/badge/license-MIT%2FApache--2.0-blue">
   <img alt="Phases"   src="https://img.shields.io/badge/build-9%2F9%20phases-34d399">
 </p>
@@ -35,9 +35,20 @@
   🔥 <strong>Production Ready</strong>
 </p>
 
+> [!IMPORTANT]
+> **Hardware & environment.** The **GPU engine** requires an **NVIDIA Blackwell
+> GPU (`sm_120`, e.g. RTX 5090)** with a **CUDA 12.8+ driver** and **PyTorch
+> (cu128)**. **CPU-only
+> mode is fully functional on any platform** — the SIMD core, Python SDK, HNSW
+> vector DB, benchmark/profiling labs, and the axum service all run without a GPU.
+
 ---
 
 ## Table of contents
+
+> **Reviewers & recruiters:** jump to
+> [Engineering competencies demonstrated](#engineering-competencies-demonstrated)
+> for a module-by-module map of the skills this project exercises.
 
 - [Overview](#overview) · [Why](#why-neuralforge-x) · [Architecture](#architecture) · [How a search flows](#how-a-search-flows) · [Features](#features)
 - [Technology stack](#technology-stack) · [Algorithms](#algorithms) · [Performance](#performance) · [GPU engine](#gpu-engine)
@@ -63,9 +74,19 @@ It is engineered to feel like production infrastructure — typed errors, proper
 tests, CI gates, reproducible benchmarks, generated charts, and a full design-doc
 site — **not** a tutorial or a demo.
 
+| Headline result | Number | Workload |
+|-----------------|:------:|----------|
+| **5-NN cosine search** | **3.4 ms** | 100,000 × 768-dim corpus (exact, Rust SIMD) |
+| **HNSW vs exact scan** | **28× faster** | top-10 ANN at recall 1.0 (~0.06 ms) |
+| **GPU batch cosine** | **up to 7.4×** | vs multi-core Rust CPU (RTX 5090, `sm_120`) |
+
+All numbers are reproducible — see [Benchmarks](#benchmarks) and [Performance](#performance).
+
 <p align="center">
   <img src="docs/assets/gifs/quickstart.svg" alt="NeuralForge-X quickstart: install, then a 5-NN cosine search over 100k×768 in 3.4 ms" width="82%">
 </p>
+
+<p align="center"><sub><em>Illustrative animated demo — see the <a href="#benchmarks">benchmarks</a> section for reproducible results and real output.</em></sub></p>
 
 > **Status: all nine phases complete.** Rust core, PyO3 SDK, the CUDA + Triton
 > GPU engine (validated on an RTX 5090 Blackwell GPU), the HNSW vector DB, the
@@ -188,6 +209,13 @@ Laptop) and reproducible with `python -m benchmark_lab all`, which also
 |-----------------------:|------:|-----------:|---------:|
 | 50,000  | 98.7 ms (1×) | 32.7 ms (**3.0×**) | 13.4 ms (**7.4×**, PyTorch) |
 | 200,000 | 382 ms (1×)  | 206 ms (**1.9×**)  | 51.9 ms (**7.4×**) |
+
+> **5-NN cosine search over 100k vectors in 3.4 ms — in 3 lines of Python:**
+> ```python
+> import neuralforge as nf
+> res = nf.top_k_search(query, corpus, k=5, metric="cosine")  # corpus: 100k×768 f32
+> res.indices, res.scores                                     # int64[5], float32[5]
+> ```
 
 The scalar→SIMD ladder reaches **77× over pure Python**; exact top-k is
 **4.8–6.1×** over a fair NumPy cosine baseline; and the **HNSW** index answers
